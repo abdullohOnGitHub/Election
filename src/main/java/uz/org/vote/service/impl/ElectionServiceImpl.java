@@ -30,8 +30,8 @@ public class ElectionServiceImpl implements ElectionService{
 
     @Override
     public ResponseMessage save(Election election) {
-        int update = jdbcTemplate.update("insert into election(name,is_active) values (?,?)", election.getName(), true);
-        return update>0 ? ResponseMessage.added() : ResponseMessage.notSaved();
+        int update = jdbcTemplate.update("insert into election(name,is_active) values (?,?) returning id", election.getName(), true);
+        return update>0 ? ResponseMessage.added(update) : ResponseMessage.notSaved();
     }
 
     @Override

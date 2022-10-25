@@ -10,6 +10,7 @@ import java.util.stream.Stream;
 public interface FileService {
     void init();
     void save(MultipartFile file,Integer candidateId);
+    void saveElectionFile(MultipartFile file, Integer electionId);
     Resource load(String fileName);
     void deleteAll();
     Stream<Path> loadAll();

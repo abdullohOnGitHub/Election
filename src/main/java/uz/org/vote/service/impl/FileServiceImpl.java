@@ -43,6 +43,19 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    public void saveElectionFile(MultipartFile file, Integer electionId) {
+        try {
+            Date date = new Date();
+            String url = date.getTime() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
+            Files.copy(file.getInputStream(),root.resolve(date.getTime() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."))));
+            jdbcTemplate.update("insert into electionfile (file_size, file_name, file_url, content_type, candidate_id) values " +
+                    "(?,?,?,?,?)", file.getSize(), file.getOriginalFilename(),  url, file.getContentType(), electionId);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+    }
+
+    @Override
     public Resource load(String fileName) {
         Path path = root.resolve(fileName);
         try {
