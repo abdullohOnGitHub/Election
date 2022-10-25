@@ -48,7 +48,7 @@ public class FileServiceImpl implements FileService {
             Date date = new Date();
             String url = date.getTime() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."));
             Files.copy(file.getInputStream(),root.resolve(date.getTime() + file.getOriginalFilename().substring(file.getOriginalFilename().indexOf("."))));
-            jdbcTemplate.update("insert into electionfile (file_size, file_name, file_url, content_type, candidate_id) values " +
+            jdbcTemplate.update("insert into electionfile (file_size, file_name, file_url, content_type, election_id) values " +
                     "(?,?,?,?,?)", file.getSize(), file.getOriginalFilename(),  url, file.getContentType(), electionId);
         }catch (Exception e){
             e.printStackTrace();

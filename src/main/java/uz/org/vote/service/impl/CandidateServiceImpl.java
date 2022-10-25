@@ -49,7 +49,7 @@ public class CandidateServiceImpl implements CandidateService {
     @Override
     public ResponseMessage getAllCandidateByElection(int id) {
         List<Map<String, Object>> candidates = jdbcTemplate.queryForList("select e.name,c.first_name,c.last_name,c.email,c.age,c.job, cf.file_name,'http://localhost:8080/candidate/' || cf.file_url as file_url " +
-                "from candidate c join candidatefile cf on c.id = cf.candidate_id join election e on e.id = c.election_id where election_id = ?", id);
+                "from candidate c join candidatefile cf on c.id = cf.candidate_id join election e on e.id = c.election_id where election_id = ? and c.is_active = true", id);
         return ResponseMessage.find(candidates);
     }
 

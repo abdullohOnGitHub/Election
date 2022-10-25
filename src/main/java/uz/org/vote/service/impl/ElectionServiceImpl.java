@@ -24,14 +24,14 @@ public class ElectionServiceImpl implements ElectionService{
 
     @Override
     public ResponseMessage getAll() {
-        List<Map<String, Object>> elections = jdbcTemplate.queryForList("select * from election where is_active = true");
+        List<Map<String, Object>> elections = jdbcTemplate.queryForList("select e.name,'http://localhost:8080/election/' || e2.file_url as file_url from election e join electionfile e2 on e.id = e2.election_id where e.is_active = true");
         return ResponseMessage.find(elections);
     }
 
     @Override
     public ResponseMessage save(Election election) {
-        int update = jdbcTemplate.update("insert into election(name,is_active) values (?,?) returning id", election.getName(), true);
-        return update>0 ? ResponseMessage.added(update) : ResponseMessage.notSaved();
+        Integer electionId = jdbcTemplate.queryForObject("insert into election(name,is_active) values (?,?) returning id", Integer.class, election.getName(), true);
+        return electionId>0 ? ResponseMessage.added(electionId) : ResponseMessage.notSaved();
     }
 
     @Override

@@ -27,9 +27,9 @@ public class ElectionController {
     public ResponseMessage saveElection(@RequestBody Election election){
         return electionService.save(election);
     }
-    @PostMapping("/add/uploadFile{election_id}")
-    public ResponseMessage saveElectionFileToDB(@PathVariable int election_id, @RequestParam MultipartFile multipartFile){
-        fileService.saveElectionFile(multipartFile,election_id);
+    @PostMapping("/add/uploadFile/{election_id}")
+    public ResponseMessage saveElectionFileToDB(@PathVariable int election_id, @RequestParam MultipartFile file){
+        fileService.saveElectionFile(file,election_id);
         return ResponseMessage.added();
     }
 
