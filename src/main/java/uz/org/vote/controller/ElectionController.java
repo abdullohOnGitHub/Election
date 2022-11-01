@@ -2,12 +2,18 @@ package uz.org.vote.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.core.io.Resource;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import uz.org.vote.message.ResponseMessage;
 import uz.org.vote.model.Election;
 import uz.org.vote.service.ElectionService;
 import uz.org.vote.service.FileService;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/election")
@@ -33,13 +39,19 @@ public class ElectionController {
         return ResponseMessage.added();
     }
 
+    @GetMapping("{path}")
+    public ResponseEntity<Resource> getFile(@PathVariable String path) throws IOException {
+        Resource resource = fileService.load(path);
+        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(new InputStreamResource(resource.getInputStream()));
+    }
+
     @DeleteMapping
     public ResponseMessage deleteElectionById(@RequestParam int id){
         return electionService.delete(id);
     }
 
-    @GetMapping("{id}")
-    public ResponseMessage getElectionById(@PathVariable int id){
-        return electionService.getElectionById(id);
-    }
+//    @GetMapping("{id}") // TODO metod o'zgartirish
+//    public ResponseMessage getElectionById(@PathVariable int id){
+//        return electionService.getElectionById(id);
+//    }
 }
