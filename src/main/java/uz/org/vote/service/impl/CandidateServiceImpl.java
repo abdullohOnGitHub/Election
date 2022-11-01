@@ -23,8 +23,8 @@ public class CandidateServiceImpl implements CandidateService {
 
     @Override
     public ResponseMessage save(Candidate candidate) {
-        Integer id = jdbcTemplate.queryForObject("insert into candidate (first_name, last_name, age, job, election_id, email) values (?,?,?,?,?,?) returning id", Integer.class,
-                candidate.getFirstName(), candidate.getLastName(), candidate.getAge(), candidate.getJob(), candidate.getElectionId(), candidate.getEmail());
+        Integer id = jdbcTemplate.queryForObject("insert into candidate (first_name, last_name, age, job, election_id, email, phone_number) values (?,?,?,?,?,?,?) returning id", Integer.class,
+                candidate.getFirstName(), candidate.getLastName(), candidate.getAge(), candidate.getJob(), candidate.getElectionId(), candidate.getEmail(),candidate.getPhoneNumber());
         return id>0 ? ResponseMessage.added(id) : ResponseMessage.notSaved();
     }
 

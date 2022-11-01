@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+import uz.org.vote.annotation.ValidatePhoneNumber;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.Min;
@@ -25,6 +26,8 @@ public class Candidate {
   private int age;
   @Email
   private String email;
+  @ValidatePhoneNumber
+  private String phoneNumber;
   private String job;
   private long score;
   private int electionId;

@@ -13,6 +13,7 @@ import uz.org.vote.model.Election;
 import uz.org.vote.service.ElectionService;
 import uz.org.vote.service.FileService;
 
+import javax.validation.Valid;
 import java.io.IOException;
 
 @RestController
@@ -30,7 +31,7 @@ public class ElectionController {
     }
 
     @PostMapping("/add")
-    public ResponseMessage saveElection(@RequestBody Election election){
+    public ResponseMessage saveElection(@RequestBody @Valid Election election){
         return electionService.save(election);
     }
     @PostMapping("/add/uploadFile/{election_id}")
